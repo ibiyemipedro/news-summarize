@@ -1,16 +1,32 @@
-# This is a sample Python script.
+import tkinter as tk
+import nltk
+from textblob import TextBlob
+from newspaper import Article
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+nltk.download('punkt')
+
+url = 'https://edition.cnn.com/travel/article/seychelles-reopens-to-travelers/index.html'
+
+article = Article(url)
+
+article.download()
+article.parse()
+
+article.nlp()
+
+print(f'Title: {article.title}')
+print(f'Authors: {article.authors}')
+print(f'Publish Date: {article.publish_date}')
+print(f'Summary: {article.summary}')
+
+sentimentAnalysis = TextBlob(article.text);
+print(f'News Polarity: {sentimentAnalysis.polarity }')
+
+print(f'Analysis : { "positive" if sentimentAnalysis.polarity > 0 else "negative"  if sentimentAnalysis.polarity < 0 else "neutral"}')
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+# root = tk.Tk()
+# root.title("News Summarizer")
+# root.geometry('1200x600')
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# root.mainloop()
